@@ -1,4 +1,5 @@
 import { ChakraProvider } from '@chakra-ui/react';
+
 import './App.css';
 import { LabelsProvider } from './context/labels/labels-context';
 import { HomePage } from './pages/home';

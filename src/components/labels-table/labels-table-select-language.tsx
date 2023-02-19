@@ -48,22 +48,19 @@ export function LabelsTableSelectLanguages({
         Languages
       </MenuButton>
       <MenuList>
-        {languagesList.map((language) => {
-          console.log(selectedLanguages.includes(language), language);
-          return (
-            <MenuItem key={language}>
-              <Checkbox
-                key={`check${language}`}
-                isChecked={selectedLanguages.includes(language)}
-                onChange={(event) => {
-                  checkboxValueChange(event.currentTarget.checked, language);
-                }}
-              >
-                {language}
-              </Checkbox>
-            </MenuItem>
-          );
-        })}
+        {languagesList.map((language) => (
+          <MenuItem key={language}>
+            <Checkbox
+              key={`check${language}`}
+              isChecked={selectedLanguages.includes(language)}
+              onChange={(event) => {
+                checkboxValueChange(event.currentTarget.checked, language);
+              }}
+            >
+              {language}
+            </Checkbox>
+          </MenuItem>
+        ))}
       </MenuList>
     </Menu>
   );
