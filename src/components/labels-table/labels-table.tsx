@@ -5,11 +5,14 @@ import {
   TableCaption,
   TableContainer,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useLabels } from '../../context/labels/labels-context';
+import { LabelsList } from '../../context/labels/labels-state';
+import { findMissingLabels } from '../../utils/find-missing-labels';
 
 import { LabelsTableBody } from './labels-table-body';
+import { LabelsTableFilter } from './labels-table-filters';
 import { LabelsTableHeader } from './labels-table-header';
 import { LabelsTablePagination } from './labels-table-pagination';
 import { LabelsTablePaginationButton } from './labels-table-pagination-buttons';
@@ -17,7 +20,10 @@ import { LabelsTableSelectLanguages } from './labels-table-select-language';
 
 export function LabelsTable() {
   const { labels, languagesList } = useLabels();
-  // const [labelsToDisplay, setLabelsToDisplay] = useState(labels ?? {});
+  const [labelsToDisplay, setLabelsToDisplay] = useState(labels);
+  const [showOnlyMissing, setShowOnlyMissing] = useState(false);
+  const [size, setSize] = useState(25);
+  const [page, setPage] = useState(0);
 
   const [selectedLanguages, setSelectedLanguages] = useState(languagesList);
 
@@ -25,8 +31,33 @@ export function LabelsTable() {
     setSelectedLanguages(languagesList);
   }, [languagesList]);
 
-  const [size, setSize] = useState(25);
-  const [page, setPage] = useState(0);
+  useEffect(() => {
+    if (showOnlyMissing) {
+      const missingLabels = findMissingLabels(labels ?? {}, languagesList);
+      setLabelsToDisplay(missingLabels);
+    } else {
+      setLabelsToDisplay(labels);
+    }
+  }, [labels, showOnlyMissing]);
+
+  const handleOnlyMissingChange = useCallback(
+    (newShowOnlyMissing: boolean) => {
+      setShowOnlyMissing(newShowOnlyMissing);
+    },
+    [labels, showOnlyMissing],
+  );
+
+  const currentPage = useMemo(() => {
+    const startIndex = page * size;
+    const currentLabels: LabelsList = {};
+    Object.keys(labelsToDisplay ?? {})
+      .slice(startIndex, startIndex + size)
+      .forEach((label) => {
+        currentLabels[label] = labelsToDisplay![label];
+      });
+
+    return currentLabels;
+  }, [page, size, labelsToDisplay]);
 
   return (
     <Box overflowX='scroll'>
@@ -44,7 +75,13 @@ export function LabelsTable() {
           </colgroup>
           <TableCaption placement='top'>
             <HStack justifyContent='space-between'>
-              <LabelsTablePagination onChange={setSize} />
+              <LabelsTablePagination
+                onChange={setSize}
+                labels={labelsToDisplay!}
+              />
+              <LabelsTableFilter
+                onShowOnlyMissingChange={handleOnlyMissingChange}
+              />
               <LabelsTableSelectLanguages
                 onChange={setSelectedLanguages}
                 selectedLanguages={selectedLanguages}
@@ -53,7 +90,10 @@ export function LabelsTable() {
           </TableCaption>
           <TableCaption placement='bottom'>
             <HStack justifyContent='space-between'>
-              <LabelsTablePagination onChange={setSize} />
+              <LabelsTablePagination
+                onChange={setSize}
+                labels={labelsToDisplay!}
+              />
               <LabelsTablePaginationButton
                 size={size}
                 page={page}
@@ -64,8 +104,7 @@ export function LabelsTable() {
           </TableCaption>
           <LabelsTableHeader />
           <LabelsTableBody
-            size={size}
-            page={page}
+            labels={currentPage}
             selectedLanguages={selectedLanguages}
           />
         </Table>

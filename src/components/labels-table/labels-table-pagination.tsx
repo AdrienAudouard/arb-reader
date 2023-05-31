@@ -1,14 +1,15 @@
 import { Box, HStack, Select, Text } from '@chakra-ui/react';
 import { ChangeEvent } from 'react';
 
-import { useLabels } from '../../context/labels/labels-context';
+import { LabelsList } from '../../context/labels/labels-state';
 
 export function LabelsTablePagination({
   onChange,
+  labels,
 }: {
   onChange: (value: number) => void;
+  labels: LabelsList;
 }) {
-  const { labels } = useLabels();
   const nbOfLabels = Object.keys(labels ?? {}).length;
   const handleChange = (event: ChangeEvent<HTMLSelectElement> | undefined) => {
     const value = event?.target.value;

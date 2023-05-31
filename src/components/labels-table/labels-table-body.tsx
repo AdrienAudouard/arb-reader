@@ -1,29 +1,22 @@
 import { Tbody, Td, Text, Tooltip, Tr } from '@chakra-ui/react';
 
 import { useLabels } from '../../context/labels/labels-context';
+import { LabelsList } from '../../context/labels/labels-state';
 
 import { LabelsTableItem } from './labels-table-item';
 
 export function LabelsTableBody({
-  size,
-  page,
+  labels,
+
   selectedLanguages,
 }: {
+  labels: LabelsList;
   selectedLanguages: string[];
-  size: number;
-  page: number;
 }) {
-  const { labels, languagesList } = useLabels();
-
-  const startIndex = page * size;
-  const labelsKeys = Object.keys(labels ?? {}).slice(
-    startIndex,
-    startIndex + size,
-  );
-
+  const { languagesList } = useLabels();
   return (
     <Tbody>
-      {labelsKeys.map((label) => {
+      {Object.keys(labels).map((label) => {
         const labelTraduction = labels![label];
         const missingLabels = languagesList.find(
           (language) => labelTraduction[language] === undefined,
