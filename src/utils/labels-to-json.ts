@@ -8,7 +8,6 @@ export function labelsToJson(labels: LabelsList, language: string): string {
     const labelDetails = label[language];
 
     if (!labelDetails) {
-      console.log(`${labelKey} not found in ${language}`);
       return;
     }
 
