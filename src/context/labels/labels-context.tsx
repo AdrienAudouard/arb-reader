@@ -35,13 +35,24 @@ export const LabelsProvider: FC<PropsWithChildren> = ({ children }) => {
     [labels, setLabels],
   );
 
+  const updateLabel = useCallback(
+    (labelKey: string, language: string, value: string) => {
+      const updatedLabels = { ...labels };
+      updatedLabels[labelKey][language].label = value;
+
+      setLabels(updatedLabels);
+    },
+    [labels, setLabels],
+  );
+
   const contextValue = useMemo(
     () => ({
       labels,
       openFile,
       languagesList,
+      updateLabel,
     }),
-    [labels, openFile, languagesList],
+    [labels, openFile, languagesList, updateLabel],
   );
 
   return (

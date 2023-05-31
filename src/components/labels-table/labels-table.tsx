@@ -32,7 +32,7 @@ export function LabelsTable() {
       <TableContainer overflowX='unset' overflowY='unset'>
         <Table
           variant='simple'
-          colorScheme='teal'
+          colorScheme='gray'
           size='md'
           width='100%'
           layout='fixed'

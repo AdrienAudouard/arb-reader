@@ -10,6 +10,8 @@ import {
 
 import FileUpload from '../file-upload/file-upload';
 
+import { ExportButton } from './export/export-button';
+
 export function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -26,7 +28,10 @@ export function Navbar() {
         <HStack spacing={8} alignItems='center'>
           <Box>ARB Viewer</Box>
         </HStack>
-        <FileUpload px='2' py='2' size='sm' />
+        <HStack>
+          <FileUpload px='2' py='2' size='sm' />
+          <ExportButton />
+        </HStack>
       </Flex>
     </Box>
   );

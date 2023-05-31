@@ -22,7 +22,7 @@ export function LabelsTablePaginationButton({
     buttons.push(
       <Button
         key={i}
-        colorScheme='teal'
+        colorScheme='cyan'
         size='xs'
         onClick={() => onChange(i)}
         variant={i !== page ? 'solid' : 'outline'}
@@ -46,11 +46,11 @@ export function LabelsTablePaginationButton({
 
   return (
     <HStack>
-      <Button colorScheme='teal' size='xs' onClick={previousClick}>
+      <Button colorScheme='cyan' size='xs' onClick={previousClick}>
         Previous
       </Button>
       {buttons}
-      <Button colorScheme='teal' size='xs' onClick={nextClick}>
+      <Button colorScheme='cyan' size='xs' onClick={nextClick}>
         Next
       </Button>
     </HStack>

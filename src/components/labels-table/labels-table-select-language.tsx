@@ -40,7 +40,7 @@ export function LabelsTableSelectLanguages({
     <Menu closeOnSelect={false}>
       <MenuButton
         as={Button}
-        colorScheme='teal'
+        colorScheme='cyan'
         size='sm'
         variant='outline'
         rightIcon={<ChevronDownIcon />}
@@ -53,6 +53,10 @@ export function LabelsTableSelectLanguages({
             <Checkbox
               key={`check${language}`}
               isChecked={selectedLanguages.includes(language)}
+              disabled={
+                selectedLanguages.length === 1 &&
+                selectedLanguages.includes(language)
+              }
               onChange={(event) => {
                 checkboxValueChange(event.currentTarget.checked, language);
               }}
