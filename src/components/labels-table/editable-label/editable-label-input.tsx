@@ -20,7 +20,7 @@ export function EditableLabelInput({ onCancel, onChange, label }: Props) {
   return (
     <InputGroup size='md'>
       <Input
-        pr='4.5rem'
+        pr='7rem'
         placeholder='Update label'
         value={value}
         onChange={handleChange}

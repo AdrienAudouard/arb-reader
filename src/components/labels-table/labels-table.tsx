@@ -17,6 +17,7 @@ import { LabelsTableSelectLanguages } from './labels-table-select-language';
 
 export function LabelsTable() {
   const { labels, languagesList } = useLabels();
+  // const [labelsToDisplay, setLabelsToDisplay] = useState(labels ?? {});
 
   const [selectedLanguages, setSelectedLanguages] = useState(languagesList);
 

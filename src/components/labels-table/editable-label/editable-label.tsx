@@ -1,4 +1,3 @@
-import { InfoIcon } from '@chakra-ui/icons';
 import { Button, Flex, Highlight, Text, Tooltip } from '@chakra-ui/react';
 import { useState } from 'react';
 
@@ -17,7 +16,8 @@ export function EditableLabel({ label, language, labelKey }: Props) {
   const [isEditing, setIsEditing] = useState(false);
 
   const labelDetails = label[language];
-  const variables = labelDetails.variables?.map((e) => `{${e}}`) ?? [];
+
+  const variables = labelDetails?.variables?.map((e) => `{${e}}`) ?? [];
 
   const handleLabelChange = (value: string) => {
     setIsEditing(false);
@@ -40,14 +40,11 @@ export function EditableLabel({ label, language, labelKey }: Props) {
             overflow='auto'
           >
             <Highlight query={variables} styles={{ color: 'teal.300' }}>
-              {labelDetails.label}
+              {labelDetails?.label ?? ''}
             </Highlight>
           </Text>
         </Button>
       </Tooltip>
-      <Button size='sm'>
-        <InfoIcon />
-      </Button>
     </Flex>
   );
 }
