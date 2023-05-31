@@ -6,18 +6,12 @@ export function findMissingLabels(
   languagesList: string[],
 ): LabelsList {
   const labelsToDisplay: LabelsList = {};
-  console.log(labels);
   Object.keys(labels ?? {}).forEach((label) => {
-    if (label === 'accept') {
-      // eslint-disable-next-line no-debugger
-      // debugger;
-    }
     const missingLabels = languagesList.find(
       (language) => labels![label][language] === undefined,
     );
-    console.log('missingLabels', missingLabels);
+
     if (missingLabels) {
-      console.log('missing label', label, missingLabels);
       labelsToDisplay[label] = labels![label];
     }
   });

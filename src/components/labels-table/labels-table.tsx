@@ -9,8 +9,10 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useLabels } from '../../context/labels/labels-context';
 import { LabelsList } from '../../context/labels/labels-state';
+import { filterLabelsWithSearch } from '../../utils/filter-labels-with-search';
 import { findMissingLabels } from '../../utils/find-missing-labels';
 
+import { LabelsSearch } from './labels-search';
 import { LabelsTableBody } from './labels-table-body';
 import { LabelsTableFilter } from './labels-table-filters';
 import { LabelsTableHeader } from './labels-table-header';
@@ -22,6 +24,7 @@ export function LabelsTable() {
   const { labels, languagesList } = useLabels();
   const [labelsToDisplay, setLabelsToDisplay] = useState(labels);
   const [showOnlyMissing, setShowOnlyMissing] = useState(false);
+  const [searchFilter, setSearchFilter] = useState('');
   const [size, setSize] = useState(25);
   const [page, setPage] = useState(0);
 
@@ -34,17 +37,24 @@ export function LabelsTable() {
   useEffect(() => {
     if (showOnlyMissing) {
       const missingLabels = findMissingLabels(labels ?? {}, languagesList);
-      setLabelsToDisplay(missingLabels);
+      setLabelsToDisplay(filterLabelsWithSearch(missingLabels, searchFilter));
     } else {
-      setLabelsToDisplay(labels);
+      setLabelsToDisplay(filterLabelsWithSearch(labels ?? {}, searchFilter));
     }
-  }, [labels, showOnlyMissing]);
+  }, [labels, showOnlyMissing, searchFilter, searchFilter]);
 
   const handleOnlyMissingChange = useCallback(
     (newShowOnlyMissing: boolean) => {
       setShowOnlyMissing(newShowOnlyMissing);
     },
-    [labels, showOnlyMissing],
+    [setShowOnlyMissing],
+  );
+
+  const handleSearchChange = useCallback(
+    (value: string) => {
+      setSearchFilter(value);
+    },
+    [setSearchFilter],
   );
 
   const currentPage = useMemo(() => {
@@ -82,10 +92,13 @@ export function LabelsTable() {
               <LabelsTableFilter
                 onShowOnlyMissingChange={handleOnlyMissingChange}
               />
-              <LabelsTableSelectLanguages
-                onChange={setSelectedLanguages}
-                selectedLanguages={selectedLanguages}
-              />
+              <HStack gap={2}>
+                <LabelsTableSelectLanguages
+                  onChange={setSelectedLanguages}
+                  selectedLanguages={selectedLanguages}
+                />
+                <LabelsSearch onSearchChange={handleSearchChange} />
+              </HStack>
             </HStack>
           </TableCaption>
           <TableCaption placement='bottom'>
@@ -98,7 +111,7 @@ export function LabelsTable() {
                 size={size}
                 page={page}
                 onChange={setPage}
-                numberOfItems={Object.keys(labels ?? {}).length}
+                numberOfItems={Object.keys(labelsToDisplay ?? {}).length}
               />
             </HStack>
           </TableCaption>

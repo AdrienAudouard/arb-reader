@@ -6,7 +6,7 @@ type Props = {
 
 export function LabelsTableFilter({ onShowOnlyMissingChange }: Props) {
   return (
-    <Tooltip label='If selected display only the missing translations'>
+    <Tooltip label='If selected display only the key with at least one missing translation'>
       <Checkbox
         onChange={(event) => {
           onShowOnlyMissingChange(event.currentTarget.checked);

@@ -1,5 +1,6 @@
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import {
+  Box,
   Button,
   Checkbox,
   Menu,
@@ -37,35 +38,37 @@ export function LabelsTableSelectLanguages({
   );
 
   return (
-    <Menu closeOnSelect={false}>
-      <MenuButton
-        as={Button}
-        colorScheme='cyan'
-        size='sm'
-        variant='outline'
-        rightIcon={<ChevronDownIcon />}
-      >
-        Languages
-      </MenuButton>
-      <MenuList>
-        {languagesList.map((language) => (
-          <MenuItem key={language}>
-            <Checkbox
-              key={`check${language}`}
-              isChecked={selectedLanguages.includes(language)}
-              disabled={
-                selectedLanguages.length === 1 &&
-                selectedLanguages.includes(language)
-              }
-              onChange={(event) => {
-                checkboxValueChange(event.currentTarget.checked, language);
-              }}
-            >
-              {language}
-            </Checkbox>
-          </MenuItem>
-        ))}
-      </MenuList>
-    </Menu>
+    <Box>
+      <Menu closeOnSelect={false}>
+        <MenuButton
+          as={Button}
+          colorScheme='cyan'
+          size='sm'
+          variant='outline'
+          rightIcon={<ChevronDownIcon />}
+        >
+          Languages
+        </MenuButton>
+        <MenuList>
+          {languagesList.map((language) => (
+            <MenuItem key={language}>
+              <Checkbox
+                key={`check${language}`}
+                isChecked={selectedLanguages.includes(language)}
+                disabled={
+                  selectedLanguages.length === 1 &&
+                  selectedLanguages.includes(language)
+                }
+                onChange={(event) => {
+                  checkboxValueChange(event.currentTarget.checked, language);
+                }}
+              >
+                {language}
+              </Checkbox>
+            </MenuItem>
+          ))}
+        </MenuList>
+      </Menu>
+    </Box>
   );
 }
