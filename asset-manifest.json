@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/arb-reader/static/css/main.1ef3a49a.css",
-    "main.js": "/arb-reader/static/js/main.dfe512c8.js",
+    "main.js": "/arb-reader/static/js/main.5f98c392.js",
     "static/js/787.4916fa6a.chunk.js": "/arb-reader/static/js/787.4916fa6a.chunk.js",
     "index.html": "/arb-reader/index.html",
     "main.1ef3a49a.css.map": "/arb-reader/static/css/main.1ef3a49a.css.map",
-    "main.dfe512c8.js.map": "/arb-reader/static/js/main.dfe512c8.js.map",
+    "main.5f98c392.js.map": "/arb-reader/static/js/main.5f98c392.js.map",
     "787.4916fa6a.chunk.js.map": "/arb-reader/static/js/787.4916fa6a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.1ef3a49a.css",
-    "static/js/main.dfe512c8.js"
+    "static/js/main.5f98c392.js"
   ]
 }
